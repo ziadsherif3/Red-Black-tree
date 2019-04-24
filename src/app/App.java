@@ -10,6 +10,8 @@ public class App {
         System.out.println(t.getRoot().getKey() + " " + t.getRoot().getColor());
         System.out.println(t.getRoot().getLeft().getKey() + " " + t.getRoot().getLeft().getColor());
         System.out.println(t.getRoot().getRight().getKey() + " " + t.getRoot().getRight().getColor());
+        System.out.println(t.getTreeHeight(t.getRoot()));
+        t.search(4);
 
 
     }

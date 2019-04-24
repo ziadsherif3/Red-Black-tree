@@ -3,13 +3,10 @@ package app;
 
 public class Tree{
 
-    private int height;
     private Node root;
-    private int bHeight;
 
     public Tree(){
 
-        this.height = 0;
         this.root = new Node();
         this.root.setNil();
 
@@ -222,7 +219,55 @@ public class Tree{
 
     }
 
-    
+    public int getTreeHeight(Node node){
+
+        // number of nodes from root to nil // nill not counted
+        if(node.getIsNil()){
+
+            return 0; // to count edges returns -1
+
+        }
+
+        int leftHeight = getTreeHeight(node.getLeft());
+        
+        int rightHeight = getTreeHeight(node.getRight());
+        
+        int max = leftHeight>rightHeight?leftHeight:rightHeight;
+        
+        return (1 + max );
+    }
+
+    public void search(int key){
+
+        Node c = this.getRoot();
+        while(!c.getIsNil()){
+
+            if(key > c.getKey()){
+
+                c = c.getRight();
+
+            }else if(key < c.getKey()){
+
+                c = c.getLeft();
+
+            }else{
+
+                break;
+
+            }
+
+        }
+
+        if(c.getIsNil()){
+
+            System.out.println( key + " Key is not found");
+            return;
+        
+        }
+
+        System.out.println(c.getKey() + " Key is found");
+
+    }
 
     public void setRoot(Node root){
 
@@ -233,18 +278,6 @@ public class Tree{
     public Node getRoot(){
 
         return (this.root);
-
-    }
-
-    public int getHeight(){
-
-        return (this.height);
-
-    }
-
-    public int getBHeight(){
-
-        return (this.bHeight);
 
     }
 
