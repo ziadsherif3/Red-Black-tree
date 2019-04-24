@@ -221,6 +221,18 @@ public class Tree{
 
     public int getTreeHeight(Node node){
 
+        //  In order not to initialize 3 variables in each recursion
+        int leftHeight = 0;
+        
+        int rightHeight = 0;
+        
+        int max = 0;
+        
+        return (getHeight(node, leftHeight, rightHeight, max));
+    }
+
+    public int getHeight(Node node, int leftHeight, int rightHeight, int max){
+
         // number of nodes from root to nil // nill not counted
         if(node.getIsNil()){
 
@@ -228,13 +240,12 @@ public class Tree{
 
         }
 
-        int leftHeight = getTreeHeight(node.getLeft());
-        
-        int rightHeight = getTreeHeight(node.getRight());
-        
-        int max = leftHeight>rightHeight?leftHeight:rightHeight;
-        
-        return (1 + max );
+        leftHeight = getHeight(node.getLeft(), leftHeight, rightHeight, max);
+        rightHeight = getHeight(node.getRight(), leftHeight, rightHeight, max);
+        max = leftHeight > rightHeight ? leftHeight : rightHeight;
+
+        return (1 + max);
+
     }
 
     public void search(int key){
