@@ -248,9 +248,10 @@ public class Tree{
 
     }
 
-    public void search(int key){
+    public Node search(int key){
 
         Node c = this.getRoot();
+
         while(!c.getIsNil()){
 
             if(key > c.getKey()){
@@ -272,11 +273,188 @@ public class Tree{
         if(c.getIsNil()){
 
             System.out.println( key + " Key is not found");
-            return;
+            return (c);
         
         }
 
         System.out.println(c.getKey() + " Key is found");
+        return (c);
+
+    }
+
+    public void rbTransplant(Node u, Node v){
+
+        if(u.getParent().getIsNil()){
+
+            this.setRoot(v);
+
+        }else if(u.getParent().getLeft().equals(u)){
+
+            u.getParent().setLeft(v);
+
+        }else{
+
+            u.getParent().setRight(v);
+
+        }
+
+        v.setParent(u.getParent());
+
+    }
+
+    public Node treeMinimum(Node z){
+
+        while(!z.getLeft().getIsNil()){
+            
+            z = z.getLeft();
+
+        }
+        
+        return (z);
+
+    }
+
+    public void rbDelete(Node z){
+
+        if(z.getIsNil()){
+
+            return;
+
+        }
+        
+        Node y = z;
+        Node x = new Node();
+        int yOriginalColor = y.getColor();
+
+        if(z.getLeft().getIsNil()){
+
+            x = z.getRight();
+            rbTransplant(z, z.getRight());
+
+        }else if(z.getRight().getIsNil()){
+
+            x = z.getLeft();
+            rbTransplant(z, z.getLeft());
+
+        }else{
+
+            y = treeMinimum(z.getRight());
+            System.out.print(y.getParent().getKey() + " " + y.getKey());
+            yOriginalColor = y.getColor();
+            x = y.getRight();
+
+            if(y.getParent().equals(z)){
+
+                x.setParent(y);
+
+            }else{
+
+                rbTransplant(y, y.getRight());
+                y.setRight(z.getRight());
+                y.getRight().setParent(y);
+
+            }
+
+            rbTransplant(z, y);
+            y.setLeft(z.getLeft());
+            y.getLeft().setParent(y);
+            y.setColor(z.getColor());
+
+        }
+
+        if(yOriginalColor == 0){
+
+            rbDeleteFix(x);
+
+        }
+
+        System.out.println("Key deleted");
+
+    }
+
+    public void rbDeleteFix(Node x){
+
+        Node w = new Node();
+
+        while(!this.getRoot().equals(x) && x.getColor() == 0){
+
+            if(x.getParent().getLeft().equals(x)){
+
+                w = x.getParent().getRight();
+                // Case 1
+                if(w.getColor() == 1){
+
+                    w.setColorToB();
+                    x.getParent().setColorToR();
+                    leftRotate(x.getParent());
+                    w = x.getParent().getRight();
+
+                }
+                //Case 2
+                if(w.getLeft().getColor() == 0 && w.getRight().getColor() == 0){
+
+                    w.setColorToR();
+                    x = x.getParent();
+                
+                }else if(w.getRight().getColor() == 0){
+                    //Case 3
+                    w.getLeft().setColorToB();
+                    w.setColorToR();
+                    rightRotate(w);
+                    w = x.getParent().getRight();
+
+
+                }else{
+                    //Case 4
+                    w.setColor(x.getParent().getColor());
+                    x.getParent().setColorToB();
+                    w.getRight().setColorToB();
+                    leftRotate(x.getParent());
+                    this.setRoot(x);
+
+                }
+
+            }else{
+
+                w = x.getParent().getLeft();
+                // Case 1
+                if(w.getColor() == 1){
+
+                    w.setColorToB();
+                    x.getParent().setColorToR();
+                    rightRotate(x.getParent());
+                    w = x.getParent().getLeft();
+
+                }
+                //Case 2
+                if(w.getRight().getColor() == 0 && w.getLeft().getColor() == 0){
+
+                    w.setColorToR();
+                    x = x.getParent();
+                
+                }else if(w.getLeft().getColor() == 0){
+                    //Case 3
+                    w.getRight().setColorToB();
+                    w.setColorToR();
+                    leftRotate(w);
+                    w = x.getParent().getLeft();
+
+
+                }else{
+                    //Case 4
+                    w.setColor(x.getParent().getColor());
+                    x.getParent().setColorToB();
+                    w.getLeft().setColorToB();
+                    rightRotate(x.getParent());
+                    this.setRoot(x);
+
+                }
+
+            }
+
+        }
+
+        x.setColorToB();
 
     }
 

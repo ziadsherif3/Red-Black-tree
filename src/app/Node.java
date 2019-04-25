@@ -41,6 +41,19 @@ public class Node implements Cloneable{
 
     }
 
+    public void setColor(int color){
+
+        if(color == 0){
+
+            this.setColorToB();
+            return;
+
+        }
+
+        this.setColorToR();
+
+    }
+
     public int getColor(){
 
         return (this.color);
