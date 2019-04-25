@@ -14,73 +14,68 @@ public class Tree{
 
     private void leftRotate(Node x) {
         
-        try{
 
-            Node y = (Node)x.getRight().clone();
-            x.setRight(y.getLeft());
+        Node y = x.getRight();
+        x.setRight(y.getLeft());
 
-            if(!y.getLeft().getIsNil()){
+        if(!y.getLeft().getIsNil()){
 
-                y.getLeft().setParent(x);
+            y.getLeft().setParent(x);
+        
+        }
 
-            }
+        y.setParent(x.getParent());
 
-            y.setParent(x.getParent());
+        if(x.getParent().getIsNil()){
 
-            if(x.getParent().getIsNil()){
+            this.setRoot(y);
 
-                this.setRoot(y);
+        }else if(x.getParent().getLeft().equals(x)){
 
-            }else if(x.getParent().getLeft().equals(x)){
+            x.getParent().setLeft(y);
 
-                x.getParent().setLeft(y);
+        }else{
 
-            }else{
+            x.getParent().setRight(y);
 
-                x.getParent().setRight(y);
+        }
 
-            }
-
-            y.setLeft(x);
-            x.setParent(y);
-
-        }catch(CloneNotSupportedException c){}
+        y.setLeft(x);
+        x.setParent(y);
         
     }
 
     private void rightRotate(Node y) {
         
-        try{
+        
 
-            Node x = (Node)y.getLeft().clone();
-            y.setLeft(x.getRight());
+        Node x = y.getLeft();
+        y.setLeft(x.getRight());
 
-            if(!x.getRight().getIsNil()){
+        if(!x.getRight().getIsNil()){
 
-                x.getRight().setParent(y);
+            x.getRight().setParent(y);
 
-            }
+        }
 
-            x.setParent(y.getParent());
+        x.setParent(y.getParent());
 
-            if(y.getParent().getIsNil()){
+        if(y.getParent().getIsNil()){
 
-                this.setRoot(x);
+            this.setRoot(x);
 
-            }else if(y.getParent().getRight().equals(y)){
+        }else if(y.getParent().getRight().equals(y)){
 
-                y.getParent().setRight(x);
+            y.getParent().setRight(x);
 
-            }else{
+        }else{
 
-                y.getParent().setLeft(x);
+            y.getParent().setLeft(x);
 
-            }
+        }
 
-            x.setRight(y);
-            y.setParent(x);
-
-        }catch(CloneNotSupportedException c){}
+        x.setRight(y);
+        y.setParent(x);
 
     }
 
@@ -198,7 +193,7 @@ public class Tree{
                     }else if(z.getParent().getLeft().equals(z)){
 
                         z = z.getParent();
-                        this.rightRotate(z);
+                        rightRotate(z);
 
 
                     }else{
@@ -339,7 +334,6 @@ public class Tree{
         }else{
 
             y = treeMinimum(z.getRight());
-            System.out.print(y.getParent().getKey() + " " + y.getKey());
             yOriginalColor = y.getColor();
             x = y.getRight();
 
@@ -410,13 +404,13 @@ public class Tree{
                     x.getParent().setColorToB();
                     w.getRight().setColorToB();
                     leftRotate(x.getParent());
-                    this.setRoot(x);
+                    x = this.getRoot();
 
                 }
 
             }else{
 
-                w = x.getParent().getLeft();
+                    w = x.getParent().getLeft();
                 // Case 1
                 if(w.getColor() == 1){
 
@@ -446,7 +440,7 @@ public class Tree{
                     x.getParent().setColorToB();
                     w.getLeft().setColorToB();
                     rightRotate(x.getParent());
-                    this.setRoot(x);
+                    x = this.getRoot();
 
                 }
 

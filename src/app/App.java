@@ -17,7 +17,13 @@ public class App {
         System.out.println(t.getRoot().getKey() + " " + t.getRoot().getColor());
         System.out.println(t.getRoot().getLeft().getKey() + " " + t.getRoot().getLeft().getColor());
         System.out.println(t.getRoot().getRight().getKey() + " " + t.getRoot().getRight().getColor());
+        //System.out.println(t.getRoot().getLeft().getLeft().getIsNil() + " " + t.getRoot().getLeft().getIsNil());
         System.out.println(t.getTreeHeight(t.getRoot()));
+        /**t.rbDelete(t.search(5));
+        System.out.println(t.getRoot().getKey() + " " + t.getRoot().getColor());
+        System.out.println(t.getRoot().getRight().getKey() + " " + t.getRoot().getRight().getColor());
+        System.out.println(t.getRoot().getLeft().getIsNil());
+        System.out.println(t.getTreeHeight(t.getRoot()));*/
 
 
     }

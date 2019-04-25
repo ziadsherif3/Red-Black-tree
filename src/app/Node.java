@@ -1,7 +1,7 @@
 package app;
 
 
-public class Node implements Cloneable{
+public class Node{
 
     // 0 for black and 1 for red
     private int color;
@@ -125,10 +125,6 @@ public class Node implements Cloneable{
 
         return(this.isNil);
     
-    }
-
-    public Object clone()throws CloneNotSupportedException{  
-        return super.clone();
     }
 
 }
