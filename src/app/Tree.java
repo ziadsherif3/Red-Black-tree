@@ -4,11 +4,13 @@ package app;
 public class Tree{
 
     private Node root;
+    private int nodeCount;
 
     public Tree(){
 
         this.root = new Node();
         this.root.setNil();
+        this.nodeCount = 0;
 
     }
 
@@ -84,6 +86,7 @@ public class Tree{
         if(this.getRoot().getIsNil()){
 
             this.setRoot(z);
+            this.incNodeCount();
         
         }else{
 
@@ -91,17 +94,18 @@ public class Tree{
 
             while(!c.getIsNil()){
 
-                if(z.getKey() == c.getKey()){
+                if(z.getKey().equalsIgnoreCase(c.getKey())){
 
                     System.out.println("Key already exists");
                     return;
 
-                }else if(z.getKey() < c.getKey()){
+                }else if(z.getKey().compareToIgnoreCase(c.getKey()) < 0){
 
                     if(c.getLeft().getIsNil()){
 
                         c.setLeft(z);
                         z.setParent(c);
+                        this.incNodeCount();
                         break;
 
                     }else{
@@ -116,6 +120,7 @@ public class Tree{
 
                         c.setRight(z);
                         z.setParent(c);
+                        this.incNodeCount();
                         break;
 
                     }else{
@@ -135,7 +140,7 @@ public class Tree{
 
     }
 
-    public void insertFix(Node z){
+    private void insertFix(Node z){
 
         if(this.getRoot().equals(z)){
             
@@ -226,7 +231,7 @@ public class Tree{
         return (getHeight(node, leftHeight, rightHeight, max));
     }
 
-    public int getHeight(Node node, int leftHeight, int rightHeight, int max){
+    private int getHeight(Node node, int leftHeight, int rightHeight, int max){
 
         // number of nodes from root to nil // nill not counted
         if(node.getIsNil()){
@@ -243,17 +248,17 @@ public class Tree{
 
     }
 
-    public Node search(int key){
+    public Node search(String key){
 
         Node c = this.getRoot();
 
         while(!c.getIsNil()){
 
-            if(key > c.getKey()){
+            if(key.compareToIgnoreCase(c.getKey()) > 0){
 
                 c = c.getRight();
 
-            }else if(key < c.getKey()){
+            }else if(key.compareToIgnoreCase(c.getKey()) < 0){
 
                 c = c.getLeft();
 
@@ -277,7 +282,7 @@ public class Tree{
 
     }
 
-    public void rbTransplant(Node u, Node v){
+    private void rbTransplant(Node u, Node v){
 
         if(u.getParent().getIsNil()){
 
@@ -297,7 +302,7 @@ public class Tree{
 
     }
 
-    public Node treeMinimum(Node z){
+    private Node treeMinimum(Node z){
 
         while(!z.getLeft().getIsNil()){
             
@@ -362,11 +367,13 @@ public class Tree{
 
         }
 
+        this.decNodeCount();
+
         System.out.println("Key deleted");
 
     }
 
-    public void rbDeleteFix(Node x){
+    private void rbDeleteFix(Node x){
 
         Node w = new Node();
 
@@ -452,7 +459,7 @@ public class Tree{
 
     }
 
-    public void setRoot(Node root){
+    private void setRoot(Node root){
 
         this.root = root;
 
@@ -461,6 +468,24 @@ public class Tree{
     public Node getRoot(){
 
         return (this.root);
+
+    }
+
+    private void incNodeCount(){
+
+        this.nodeCount++;
+
+    }
+
+    private void decNodeCount(){
+
+        this.nodeCount--;
+
+    }
+
+    public int getNodeCount(){
+
+        return (this.nodeCount);
 
     }
 

@@ -5,7 +5,7 @@ public class Node{
 
     // 0 for black and 1 for red
     private int color;
-    private int key;
+    private String key;
     private Node l;
     private Node r;
     private Node p;
@@ -15,7 +15,7 @@ public class Node{
 
     }
 
-    public Node(int key){
+    public Node(String key){
 
         this.setKey(key);
         this.clearIsNil();
@@ -60,13 +60,13 @@ public class Node{
 
     }
 
-    public void setKey(int key){
+    public void setKey(String key){
 
         this.key = key;
     
     }
 
-    public int getKey(){
+    public String getKey(){
 
         return (this.key);
 
